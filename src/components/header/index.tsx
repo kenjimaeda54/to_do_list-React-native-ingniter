@@ -44,7 +44,7 @@ export const Header = ({total}: HeaderProps): JSX.Element => {
       <View style={styles.viewContent}>
         <Image source={Logo} />
         <Text style={styles.textSubTitle}>
-          Você tem {total.length} itens{total.length > 0 ? 's' : ''}
+          Você tem {total.length} ite{total.length > 0 ? 'ns' : 'm'}
         </Text>
       </View>
       <View style={styles.viewFooter}>
