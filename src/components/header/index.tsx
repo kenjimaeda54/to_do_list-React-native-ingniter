@@ -8,62 +8,33 @@ import {
   Alert,
 } from 'react-native';
 import {styles} from './style';
-import uuid from 'react-native-uuid';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import Logo from '../../assets/images/logo/logo.png';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {ListTasks} from '../../screen/home';
 
-type HeaderProps = {
-  setNewListTak: React.Dispatch<React.SetStateAction<ListTasks[]>>;
-  newListTask: ListTasks[];
-};
+import uuid from 'react-native-uuid';
 
-type ListTask = {
-  id: string;
-  newTask: string;
-};
-
-export const Header = ({
-  setNewListTak,
-  newListTask,
-}: HeaderProps): JSX.Element => {
+export const Header = (): JSX.Element => {
   const [task, setTask] = useState(' ');
-  const [mounted, setMounted] = useState(false);
 
-  const handleAddTask = () => {
-    const newTasks = {
-      id: `${uuid.v4()}`,
-      newTask: task,
-    };
-    setNewListTak(oldState => [...oldState, newTasks]);
-    setMounted(true);
-  };
-
-  useEffect(() => {
-    const fetchGetTask = async () => {
-      try {
-        const fetchStorage = await AsyncStorage.getItem('@storage_new_task');
-        const listTasks = fetchStorage
-          ? JSON.parse(fetchStorage as unknown as string)
-          : [];
-        /*sempre que trabalhar com async storage em arrays e ideal realizar
-                procedimento acima para evitar apagar array anterior*/
-        await AsyncStorage.setItem(
-          '@storage_new_task',
-          JSON.stringify([...listTasks, ...newListTask]),
-        );
-        setMounted(false);
-      } catch {
-        Alert.alert('Nao foi possível salvar');
-      }
-    };
-    if (mounted) {
-      fetchGetTask();
+  const handleAddTask = async () => {
+    try {
+      const oldTask = await AsyncStorage.getItem('@storage_new_task');
+      const getTask = oldTask ? JSON.parse(oldTask) : [];
+      const newTasks = {
+        id: `${uuid.v4()}`,
+        newTask: task,
+      };
+      await AsyncStorage.setItem(
+        '@storage_new_task',
+        JSON.stringify([...getTask, newTasks]),
+      );
+    } catch {
+      Alert.alert('Nao foi possível salvar');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newListTask, mounted]);
+  };
 
   return (
     <View style={styles.viewContainer}>

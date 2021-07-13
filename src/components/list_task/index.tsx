@@ -11,36 +11,30 @@ import Icon from 'react-native-vector-icons/Feather';
 import {styles} from './style';
 import trash from '../../assets/icons/trash/trash.png';
 import {BackGround} from '../background';
-import {ListTasks} from '../../screen/home';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ListTasks} from '../../screen/home';
 
 type ListTaskProps = {
-  data: string;
-  listDataTask: ListTasks[];
-  listData: ListTasks;
+  data: ListTasks;
 };
 
-export const ListTask = ({
-  data,
-  listDataTask,
-  listData,
-}: ListTaskProps): JSX.Element => {
+export const ListTask = ({data}: ListTaskProps): JSX.Element => {
+  const {id, newTask} = data;
   const [checkTask, setCheckTask] = useState(false);
 
   const handleStatus = () => {
     setCheckTask(!checkTask);
   };
 
-  const handleDeleTask = async (id: string) => {
+  const handleDeleTask = async (key: string) => {
     try {
-      const fetchTask = AsyncStorage.getItem(
-        '@storage_new_task',
-      ) as unknown as string;
+      const fetchTask = await AsyncStorage.getItem('@storage_new_task');
       const checkFetchTask: ListTasks[] = fetchTask
         ? JSON.parse(fetchTask)
         : [];
       if (checkFetchTask !== [] && checkFetchTask !== null) {
-        const deleteTask = checkFetchTask.filter(task => task.id !== id);
+        const deleteTask = checkFetchTask.filter(task => task.id !== key);
         await AsyncStorage.setItem(
           '@storage_new_task',
           JSON.stringify(deleteTask),
@@ -62,9 +56,9 @@ export const ListTask = ({
           <View style={styles.viewNoCheck} />
         )}
       </TouchableHighlight>
-      <Text style={styles.textTask}> {data} </Text>
+      <Text style={styles.textTask}> {newTask} </Text>
       {checkTask && <View style={styles.viewCheckItem} />}
-      <TouchableOpacity onPress={() => handleDeleTask(listData.id)}>
+      <TouchableOpacity onPress={() => handleDeleTask(id)}>
         <Image source={trash} />
       </TouchableOpacity>
     </BackGround>
