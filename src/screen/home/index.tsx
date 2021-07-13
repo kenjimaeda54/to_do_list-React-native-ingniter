@@ -34,7 +34,7 @@ export const HomeScreen = (): JSX.Element => {
 
   return (
     <View style={styles.viewContainer}>
-      <Header />
+      <Header total={newListTask} />
       <View style={styles.viewContent}>
         <FlatList
           data={newListTask}

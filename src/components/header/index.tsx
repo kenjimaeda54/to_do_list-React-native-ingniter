@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
+import {styles} from './style';
 import {
   View,
   Text,
@@ -7,16 +8,17 @@ import {
   TouchableHighlight,
   Alert,
 } from 'react-native';
-import {styles} from './style';
-
+import {ListTasks} from '../../screen/home';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Logo from '../../assets/images/logo/logo.png';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import uuid from 'react-native-uuid';
 
-export const Header = (): JSX.Element => {
+type HeaderProps = {
+  total: ListTasks[];
+};
+
+export const Header = ({total}: HeaderProps): JSX.Element => {
   const [task, setTask] = useState(' ');
 
   const handleAddTask = async () => {
@@ -31,6 +33,7 @@ export const Header = (): JSX.Element => {
         '@storage_new_task',
         JSON.stringify([...getTask, newTasks]),
       );
+      setTask('');
     } catch {
       Alert.alert('Nao foi possível salvar');
     }
@@ -40,7 +43,9 @@ export const Header = (): JSX.Element => {
     <View style={styles.viewContainer}>
       <View style={styles.viewContent}>
         <Image source={Logo} />
-        <Text style={styles.textSubTitle}> Você tem 3 tarefas</Text>
+        <Text style={styles.textSubTitle}>
+          Você tem {total.length} itens{total.length > 0 ? 's' : ''}
+        </Text>
       </View>
       <View style={styles.viewFooter}>
         <TextInput
@@ -49,6 +54,7 @@ export const Header = (): JSX.Element => {
           placeholderTextColor="#B2B2B2"
           onChangeText={setTask}
           autoFocus={true}
+          value={task}
         />
         {/*touchableHighlight e melhor para text inputs */}
         <TouchableHighlight

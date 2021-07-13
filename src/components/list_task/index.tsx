@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -8,12 +8,11 @@ import {
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import {styles} from './style';
-import trash from '../../assets/icons/trash/trash.png';
-import {BackGround} from '../background';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import trash from '../../assets/icons/trash/trash.png';
 import {ListTasks} from '../../screen/home';
+import {styles} from './style';
+import {BackGround} from '../background';
 
 type ListTaskProps = {
   data: ListTasks;
