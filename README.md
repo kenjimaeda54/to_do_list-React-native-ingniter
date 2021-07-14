@@ -23,18 +23,19 @@ Projeto pessoal usando desing do Figma. Template criado pelos desenvolvedores do
 ## O que eu aprendi
 Reforcei conceitos de técnicas em async storage,funcoes e hooks
 
-Para evitar problemas de  setar o async storage e perder os valores antigos ou sobescrever os novos, melhor tenica 'e utilizar </br>
+Para evitar problemas de  setar o async storage e perder os valores antigos ou sobrescrever os novos, melhor técnica  é utilizar </br>
 rest operator e  garantir que esta vazio o async storage. Para isto primeiro eu busco se possui algo </br>
-no async storage com get item 'e se possuir  adiciono (...getTask,newTask) o anterior.
-Maior dificuldade na realizacao deste projeto foi conceitual. Async Storage 'e assincrono entao melhro maneira de setar e utilizar
-variaveis globais e nao os hooks do react, ha varios motivos. Alguns deles: hooks sao funcionais ou seja imutaveis </br>
-ao salvar no async storage nao ira salvar o hooks em si,entao quando fizer refresh meu hook estara vazio</br>
-para setar uma boa pratica e utilizar variavel glboal que no caso nao e imutavel</br>
-Para pegar uso hooks(useEfect e useState) eles sao ideias,utilizando useFect da forma correta sempre monto meu useState e 
-renderizo no componente. Repara que utilizo apenas as variaveis java script para realizar o setItem no Async Storaga</br>
-no caso e uma constante newTask e uma constatne que vai caputrar os antigos dados salvos em oldTask.
-Para pegar utilizo setNewListTask. No momento de pegar nao preciso utlizar o rest operaor ja que estamos tratando no momemnto de salvar</br>
-Por fim coloquei a dependencia no useEfect (newListTask) ou seja todo momento que atualizar a lista,sera montada novamente </br>
+no async storage com get item 'e se possuir  adiciono (...getTask,newTask) o anterior.</br>
+Maior dificuldade na realização deste projeto foi conceitual. Async Storage 'e assíncrono então melhor maneira de setar e utilizar<br>
+variáveis globais e não os hooks do react, ha vários motivos. Alguns deles: hooks são funcionais, ou seja imutáveis </br>
+ao salvar no async storage nao ira salvar o hooks em si,entao quando fizer refresh meu hook estará vazio</br>
+para setar uma boa prática e utilizar variável global que no caso não e imutável</br>
+Para pegar uso hooks(useEfect e useState) eles são ideias, utilizando useFect da forma correta sempre monto meu useState e<br>
+renderizo no componente. Repara que utilizo apenas as variáveis java script para realizar o setItem no Async Storaga</br>
+no caso e uma constante newTask e uma constante que vai capturar os antigos dados salvos em oldTask.<br>
+Para pegar utilizo setNewListTask. No momento de pegar não preciso utilizar o rest operaor já que estamos tratando no momento de salvar</br>
+Por fim coloquei a dependência no useEfect (newListTask) ou seja todo momento que atualizar a lista,sera montada novamente </br>
+se não fizer isso so sera montando no momento de montar o componente.mento que atualizar a lista,sera montada novamente </br>
 se nao fizer isso so sera montando no momento de montar o componente.
 
 ```typescript
@@ -83,6 +84,51 @@ export const Header = ({total}: HeaderProps): JSX.Element => {
   
  } 
  ```
+ 
+  Utilizei biblioteca nativa do React Native para icons</br> 
+ Para utilização preciso editar o  android/app/build.gradle, não  android/build.gradle</br>
+ Para finalizar  utilzei tambem o react native link </br>
+ 
+ ```java
+ 
+ apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+ 
+ project.ext.vectoricons = [
+    iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf' ] // Name of the font files you want to copy
+]
+
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+ 
+ ```
+ Por fim fiz o uso de fontes customizadas para tal e preciso fazer o download dessas fontes e colocar no projeto</br>
+ apos isto precisa na raiz do projeto criar uma pasta  react-native.config.js</b>
+ precisa no assets indicar o caminho correto aonde esta as fontes</br>
+ depois só precisa chamar elas da forma comum quando estiliza fonte.
+ ```javascript
+ module.exports = {
+  project: {
+    ios: {},
+    android: {},
+  },
+  assets: ['./src/assets/fonts/'],
+};
+
+/* ----------------------------- /*
+
+style = {
+  fontFamily: "Roboto"
+}
+
+/*---------------------------*/
+import styled from 'styled-components/native';
+
+export const Title = styled.Text`
+  font-family: 'Roboto'
+`;
+
+ 
+ ```
+ 
 
  # Feature
   - Hooks
@@ -91,4 +137,8 @@ export const Header = ({total}: HeaderProps): JSX.Element => {
   - Media Screen
   - Tipagem
  
-
+# Dependencias 
+- [react native linear gratdiente](https://github.com/react-native-linear-gradient/react-native-linear-gradient)
+- [react icons](https://github.com/oblador/react-native-vector-icons)
+- [react native async storage](https://react-native-async-storage.github.io/async-storage/docs/install)
+- [react native uuid](https://www.npmjs.com/package/react-native-uuid)
