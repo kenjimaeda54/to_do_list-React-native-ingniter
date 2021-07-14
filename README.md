@@ -21,7 +21,7 @@ Projeto pessoal usando desing do Figma. Template criado pelos desenvolvedores do
 ![typescript](https://img.shields.io/badge/-typescript-EFD81D?style=flat-square&logo=typescript&logoColor=black)
   
 ## Figma
-https://www.figma.com/file/k4irWM7G33bGSmX1AlxH9x/to.do-Copy?node-id=10485%3A499
+[Figma](https://www.figma.com/file/k4irWM7G33bGSmX1AlxH9x/to.do-Copy?node-id=10485%3A499)
   
 
 ## O que eu aprendi
